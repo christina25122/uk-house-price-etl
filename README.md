@@ -96,6 +96,13 @@ SELECT
   ) AS yearly_change
 FROM uk_house_prices;
 
+## 📊 Visualization
+
+The chart below shows the **Top 10 most expensive UK regions** based on average house prices.
+
+![Top 10 UK House Prices](top_10_uk_house_prices.png)
+
+
 🎯 Skills Demonstrated
 
 End-to-end ETL pipeline development
