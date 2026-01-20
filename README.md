@@ -1,102 +1,122 @@
-\# UK House Price ETL Pipeline 🇬🇧
+# 🇬🇧 UK House Price ETL Pipeline
 
+## 📌 Project Overview
+This project is an end-to-end ETL (Extract, Transform, Load) pipeline built using UK Government open data from the UK Land Registry House Price Index.
 
+The pipeline extracts raw data, cleans and transforms it using Python and pandas, loads it into a PostgreSQL database running in Docker, and performs analytical SQL queries using window functions.
 
-\## Overview
-
-This project is an end-to-end ETL (Extract, Transform, Load) pipeline built using UK Government open data.
-
-
-
-The pipeline downloads UK House Price Index data, cleans and transforms it using Python and pandas, and loads it into a PostgreSQL database running inside Docker. The final dataset is queried using SQL for analysis.
-
-
-
-This project demonstrates real-world data engineering skills, including debugging, data cleaning, containerisation, and database loading.
-
-
+This project is designed as a portfolio project for the UK data job market.
 
 ---
 
+## 🏗️ Architecture
 
-
-\## Tech Stack
-
-\- Python 3.12
-
-\- pandas
-
-\- PostgreSQL 15
-
-\- Docker
-
-\- SQL
-
-\- UK Government Open Data (Land Registry)
-
-
+Raw CSV  
+↓  
+Python ETL (pandas)  
+↓  
+Clean CSV  
+↓  
+PostgreSQL (Docker)  
+↓  
+SQL Analysis  
 
 ---
 
+## 🛠️ Tech Stack
 
-
-\## Project Architecture
-
-
-
-1\. \*\*Extract\*\*
-
-&nbsp;  - Source: UK Land Registry House Price Index (CSV)
-
-&nbsp;  - Data stored in `data/raw/`
-
-
-
-2\. \*\*Transform\*\*
-
-&nbsp;  - Cleaned columns (date, region, average\_price)
-
-&nbsp;  - Handled missing values
-
-&nbsp;  - Standardised data types
-
-&nbsp;  - Output saved to `data/clean/`
-
-
-
-3\. \*\*Load\*\*
-
-&nbsp;  - PostgreSQL database running in Docker
-
-&nbsp;  - Table: `uk\_house\_prices`
-
-&nbsp;  - Data loaded using PostgreSQL `COPY` command
-
-
+- Python 3.12  
+- pandas  
+- PostgreSQL 15  
+- Docker  
+- SQL (Window Functions)  
+- UK Government Open Data  
 
 ---
 
+## 📂 Project Structure
+
+---
+
+## 🔄 ETL Pipeline
+
+### Extract
+- Source: UK Land Registry House Price Index (CSV)
+- Stored in `data/raw/`
+
+### Transform
+- Selected columns:
+  - date
+  - region
+  - average_price
+- Cleaned and validated data
+- Output written to `data/clean/ukhpi_average_prices_clean.csv`
+
+### Load
+- PostgreSQL database running in Docker
+- Table name: `uk_house_prices`
+- Data loaded using PostgreSQL COPY command
+
+---
+
+## 🗄️ Database Schema
+
+```sql
+CREATE TABLE uk_house_prices (
+  date DATE,
+  region TEXT,
+  average_price NUMERIC
+);
 
 
-\## How to Run
+📊 Example SQL Analysis
+
+Top 10 Most Expensive Regions
+SELECT
+  region,
+  AVG(average_price) AS avg_price,
+  RANK() OVER (ORDER BY AVG(average_price) DESC) AS price_rank
+FROM uk_house_prices
+GROUP BY region
+ORDER BY price_rank
+LIMIT 10;
+
+Year-over-Year Price Change
+SELECT
+  region,
+  date,
+  average_price,
+  LAG(average_price, 12) OVER (
+    PARTITION BY region
+    ORDER BY date
+  ) AS price_last_year,
+  average_price - LAG(average_price, 12) OVER (
+    PARTITION BY region
+    ORDER BY date
+  ) AS yearly_change
+FROM uk_house_prices;
+
+## 📊 Visualization
+
+The chart below shows the **Top 10 most expensive UK regions** based on average house prices.
+
+![Top 10 UK House Prices](top_10_uk_house_prices.png)
 
 
+🎯 Skills Demonstrated
 
-\### 1. Start PostgreSQL with Docker
+End-to-end ETL pipeline development
 
-```bash
+Python data processing with pandas
 
-docker run --name uk\_postgres \\
+PostgreSQL and SQL window functions
 
-&nbsp; -e POSTGRES\_USER=uk\_user \\
+Docker containerisation
 
-&nbsp; -e POSTGRES\_PASSWORD=uk\_pass \\
+Git & GitHub version control
 
-&nbsp; -e POSTGRES\_DB=uk\_data \\
+👤 Author
 
-&nbsp; -p 5432:5432 \\
-
-&nbsp; -d postgres:15
-
-
+Loshni Christina
+GitHub: https://github.com/christina25122
 
