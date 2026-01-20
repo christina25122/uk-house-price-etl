@@ -35,17 +35,6 @@ SQL Analysis
 ---
 
 ## 📂 Project Structure
-uk-house-price-etl/
-├── data/
-│ ├── raw/ # Raw government data (ignored in Git)
-│ └── clean/ # Cleaned CSV output (ignored in Git)
-├── etl.py
-├── load_to_postgres.py
-├── sql/
-│ └── analysis.sql
-├── README.md
-└── .gitignore
-
 
 ---
 
