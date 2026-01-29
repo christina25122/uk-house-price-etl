@@ -1,3 +1,5 @@
+![ETL Pipeline](https://github.com/christina25122/uk-house-price-etl/actions/workflows/etl.yml/badge.svg)
+
 # UK House Price ETL Pipeline
 
 ## What this project does
