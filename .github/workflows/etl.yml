@@ -1,0 +1,31 @@
+name: ETL Pipeline (Docker)
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build and run pipeline
+        run: |
+          docker compose up --build --abort-on-container-exit
+
+      - name: Show logs (etl_runner)
+        if: always()
+        run: |
+          docker compose logs etl_runner
+
+      - name: Upload output chart
+        uses: actions/upload-artifact@v4
+        with:
+          name: house-price-chart
+          path: top_10_uk_house_prices.png

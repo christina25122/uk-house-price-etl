@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: uk_postgres
+    environment:
+      POSTGRES_USER: uk_user
+      POSTGRES_PASSWORD: uk_pass
+      POSTGRES_DB: uk_data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U uk_user -d uk_data"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  etl_runner:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: uk_data
+      DB_USER: uk_user
+      DB_PASSWORD: uk_pass
