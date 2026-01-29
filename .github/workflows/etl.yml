@@ -15,9 +15,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Build and run pipeline
+      -       - name: Build and run pipeline (show logs on failure)
         run: |
-          docker compose up --build --abort-on-container-exit
+          docker compose up --build --abort-on-container-exit --exit-code-from etl_runner
+
 
       - name: Show logs (etl_runner)
         if: always()
