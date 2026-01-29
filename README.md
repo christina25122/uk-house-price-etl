@@ -17,31 +17,28 @@ docker compose up --build
 
 ---
 
-## Architecture
-Data flow:
+Architecture
 
-Raw CSV  
-→ Data cleaning (Python / Pandas)  
-→ Data quality checks  
-→ PostgreSQL (UPSERT, no duplicate records)  
-→ Visualization  
+Raw CSV
+→ Data cleaning (Python / Pandas)
+→ Data quality checks
+→ PostgreSQL (UPSERT, no duplicates)
+→ Visualization
 
-The entire pipeline runs inside Docker containers and is orchestrated using Docker Compose.
+All components run inside Docker containers.
 
----
+Tech stack
 
-## Tech stack
-- Python (Pandas, psycopg2)
-- PostgreSQL
-- Docker and Docker Compose
-- GitHub Actions for CI
-- SQL
+-Python (Pandas, psycopg2)
+-PostgreSQL
+-Docker and Docker Compose
+-GitHub Actions (CI)
+-SQL
 
----
+Key engineering features
 
-## Key engineering features
-- Environment-based configuration for database connectivity
-- Data quality checks that fail the pipeline on invalid data
-- Idempotent database loads using primary keys and UPSERT logic
-- Fully reproducible execution with a single Docker command
-- Continuous integration pipeline that runs automatically on every push
+-Environment-based configuration (no hardcoded secrets)
+-Data quality checks with fail-fast validation
+-Idempotent database loads using primary keys and UPSERT
+-Fully reproducible pipeline with a single command
+-Continuous integration running on every pushtion pipeline that runs automatically on every push
