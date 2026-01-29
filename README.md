@@ -10,7 +10,13 @@ The pipeline:
 - runs fully automated using Docker and GitHub Actions.
 
 ---
+## How to run locally
 
+```bash
+docker compose up --build
+
+
+---
 ## Architecture (high level)
 
 Raw CSV  
@@ -38,10 +44,3 @@ All components run inside Docker containers.
 - Idempotent database loads using PRIMARY KEY + UPSERT
 - Fully reproducible with one command
 - CI pipeline runs automatically on every push
-
----
-
-## How to run locally
-
-```bash
-docker compose up --build
