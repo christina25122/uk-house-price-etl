@@ -1,46 +1,47 @@
 # UK House Price ETL Pipeline
 
 ## What this project does
-An end-to-end **ETL data pipeline** that processes UK house price data and loads it into PostgreSQL using production-style data engineering practices.
+This project implements an end-to-end ETL data pipeline that processes UK house price data and loads it into PostgreSQL using production-style data engineering practices.
 
 The pipeline:
-- cleans and validates raw data,
-- enforces data quality checks,
-- safely loads data into a database (idempotent upserts),
-- runs fully automated using Docker and GitHub Actions.
+- cleans and validates raw data  
+- enforces data quality checks  
+- safely loads data into a database using idempotent upserts  
+- runs fully automated using Docker and GitHub Actions  
 
 ---
-## How to run locally
 
+## How to run locally
 ```bash
 docker compose up --build
 
-
 ---
-## Architecture (high level)
+
+## Architecture
+Data flow:
 
 Raw CSV  
-→ Data Cleaning (Python / Pandas)  
-→ Data Quality Checks  
-→ PostgreSQL (UPSERT, no duplicates)  
+→ Data cleaning (Python / Pandas)  
+→ Data quality checks  
+→ PostgreSQL (UPSERT, no duplicate records)  
 → Visualization  
 
-All components run inside Docker containers.
+The entire pipeline runs inside Docker containers and is orchestrated using Docker Compose.
 
 ---
 
 ## Tech stack
 - Python (Pandas, psycopg2)
 - PostgreSQL
-- Docker & Docker Compose
-- GitHub Actions (CI)
+- Docker and Docker Compose
+- GitHub Actions for CI
 - SQL
 
 ---
 
 ## Key engineering features
-- Environment-based configuration (no hardcoded secrets)
-- Data quality checks (fail fast on bad data)
-- Idempotent database loads using PRIMARY KEY + UPSERT
-- Fully reproducible with one command
-- CI pipeline runs automatically on every push
+- Environment-based configuration for database connectivity
+- Data quality checks that fail the pipeline on invalid data
+- Idempotent database loads using primary keys and UPSERT logic
+- Fully reproducible execution with a single Docker command
+- Continuous integration pipeline that runs automatically on every push
